@@ -49,14 +49,27 @@ class LicenciaListView(View):
 class LicenciaDetailtView(View):
     def get(self, request, pk):
         diccionarioLicencia = dict()
+        arrayDatosApp = []
+
 
         licenciaDetail = Licencia.objects.get(pk=pk)
+
+        datosApp = dict()
+        datosApp['id'] = licenciaDetail.aplicaciones.id
+        datosApp['nombre'] = licenciaDetail.aplicaciones.nombre
+        datosApp['descripcion'] = licenciaDetail.aplicaciones.descripcion
+        datosApp['linkDescarga'] = licenciaDetail.aplicaciones.linkDescarga
+        datosApp['versionApp'] = licenciaDetail.aplicaciones.versionApp
+        datosApp['lenguaje'] = licenciaDetail.aplicaciones.lenguaje
+        datosApp['categoria'] = licenciaDetail.aplicaciones.categoria
+
+        arrayDatosApp.append(datosApp)
 
         diccionarioLicencia['id'] = licenciaDetail.id
         diccionarioLicencia['nombre'] = licenciaDetail.nombre
         diccionarioLicencia['tipoLicencia'] = licenciaDetail.tipoLicencia
         diccionarioLicencia['costoLicencia'] = licenciaDetail.costoLicencia
-        diccionarioLicencia['aplicacion'] = licenciaDetail.aplicaciones.nombre
+        diccionarioLicencia['aplicacion'] = list(arrayDatosApp)
         print(diccionarioLicencia)
         print(JsonResponse(diccionarioLicencia, safe = False))
         return JsonResponse(diccionarioLicencia, safe = False)
