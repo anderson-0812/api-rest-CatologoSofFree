@@ -16,8 +16,29 @@ class AplicacionListView(View):
 class AplicacionDetailtView(View):
     def get(self, request, pk):
         aplicacionDetail = Aplicacion.objects.get(pk=pk)
-        print(JsonResponse(model_to_dict(aplicacionDetail), safe = False))
-        return JsonResponse(model_to_dict(aplicacionDetail), safe = False)
+        licenciasApp = aplicacionDetail.aplicaciones.all()
+        diccionarioLicencia = dict()
+        arrayLicencia = []
+        diccionarioAplicacion = model_to_dict(aplicacionDetail)
+
+        for licens in licenciasApp:
+            print(licens)
+            diccionarioLicencia['id'] = licens.id
+            diccionarioLicencia['nombre'] = licens.nombre
+            diccionarioLicencia['tipoLicencia'] = licens.tipoLicencia
+            diccionarioLicencia['costoLicencia'] = licens.costoLicencia
+            # ESTA OPCION EVITA NO SE ACTIVA DAÑA LA CONSULTA
+            # diccionarioLicencia['aplicaciones'] = licens.aplicaciones
+            arrayLicencia.append(diccionarioLicencia)
+
+        # print(arrayLicencia)
+
+        # print('aplicacionDetail')
+        # print(diccionarioAplicacion)
+        # diccionarioAplicacion['licencias'] = list(arrayLicencia)
+        # print('diccionarioAplicacion')
+        # print(diccionarioAplicacion)
+        return JsonResponse(diccionarioAplicacion, safe = False)
 
 
 class LicenciaListView(View):
