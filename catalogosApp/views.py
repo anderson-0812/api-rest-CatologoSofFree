@@ -35,7 +35,7 @@ class AplicacionDetailtView(View):
 
         # print('aplicacionDetail')
         # print(diccionarioAplicacion)
-        # diccionarioAplicacion['licencias'] = list(arrayLicencia)
+        diccionarioAplicacion['licencias'] = list(arrayLicencia)
         # print('diccionarioAplicacion')
         # print(diccionarioAplicacion)
         return JsonResponse(diccionarioAplicacion, safe = False)
